@@ -1,0 +1,28 @@
+<html>
+
+<head>
+  <title>Snake Game</title>
+  <style>
+    canvas {
+      background-color: #e0e5db;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%239cac92' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+      border: 1px solid #9aac92;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="snake" width="475" height="475"></canvas>
+</body>
+
+<script src="coordinate.js"></script>
+<script src="snake.js"></script>
+<script src="game.js"></script>
+<script>
+  const game = new Game()
+  game.start()
+</script>
+
+</html>
