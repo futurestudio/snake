@@ -5,7 +5,7 @@ class Game {
     this.box = 25
     this.treat = null
     this.timer = null
-    this.changedDirection = false
+    this.isPaused = false
     this.snake = new window.Snake({ box: this.box })
 
     this.playingField = document.getElementById('snake').getContext('2d')
@@ -16,16 +16,27 @@ class Game {
   start () {
     this._createTreat()
     this._createDirectionListener()
+    this._startTimer()
+  }
+
+  _startTimer () {
     this.timer = setInterval(() => this.nextTick(), 130)
   }
 
   stop () {
+    this._stopTimer()
+  }
+
+  _stopTimer () {
     clearInterval(this.timer)
     this.timer = null
   }
 
   nextTick () {
-    this.changedDirection = false
+    if (this.isPaused) {
+      return
+    }
+
     try {
       this._ensureNotGameOver()
       this._moveSnake()
@@ -43,6 +54,10 @@ class Game {
   }
 
   _handleDirection ({ keyCode }) {
+    if (keyCode === 32) {
+      return this._togglePaused()
+    }
+
     if (keyCode === 37 && this.snake.getDirection() !== 'RIGHT') {
       this.snake.setDirection('LEFT')
     }
@@ -58,6 +73,10 @@ class Game {
     if (keyCode === 40 && this.snake.getDirection() !== 'UP') {
       this.snake.setDirection('DOWN')
     }
+  }
+
+  _togglePaused () {
+    this.isPaused = !this.isPaused
   }
 
   _createTreat () {
