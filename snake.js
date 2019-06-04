@@ -64,7 +64,7 @@ class Snake {
 
   ensureInsidePlayingField () {
     if (this._outOfBounds()) {
-      throw new Error('Snake hit the wall')
+      throw new Error('Oh no! Your snake hit the wall')
     }
   }
 
@@ -94,7 +94,7 @@ class Snake {
     })
 
     if (item) {
-      throw new Error('Snake is eating itself')
+      throw new Error('Oh no! Your snake is eating itself')
     }
   }
 

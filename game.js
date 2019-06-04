@@ -3,11 +3,11 @@
 class Game {
   constructor () {
     this.box = 25
+    this.score = 0
     this.treat = null
     this.timer = null
     this.isPaused = false
     this.snake = new window.Snake({ box: this.box })
-
     this.playingField = document.getElementById('snake').getContext('2d')
   }
 
@@ -80,8 +80,12 @@ class Game {
       this._renderPlayingField()
     } catch (error) {
       this.stop()
-      throw error
+      this._showError(error)
     }
+  }
+
+  _showError (error) {
+    document.getElementById('error').textContent = error.message
   }
 
   _ensureNotGameOver () {
@@ -93,6 +97,7 @@ class Game {
     this.snake.move()
 
     if (this.snake.isEating(this.treat)) {
+      this.score += 1
       return this._createTreat()
     }
 
@@ -100,9 +105,14 @@ class Game {
   }
 
   _renderPlayingField () {
+    this._renderScore()
     this._clearPlayingField()
     this._renderSnake()
     this._renderTreat()
+  }
+
+  _renderScore () {
+    document.getElementById('score').textContent = this.score
   }
 
   _clearPlayingField () {
