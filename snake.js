@@ -23,12 +23,14 @@ class Snake {
     this._setNewHead()
   }
 
-  _head () {
-    return this.coordinates[0]
+  _setNewHead () {
+    if (this.isMoving()) {
+      this.coordinates.unshift(this._newHead())
+    }
   }
 
   _newHead () {
-    let { x, y } = this.coordinates[0]
+    let { x, y } = this._head()
 
     if (this.direction === 'LEFT') x -= this.box
     if (this.direction === 'UP') y -= this.box
@@ -36,6 +38,10 @@ class Snake {
     if (this.direction === 'DOWN') y += this.box
 
     return new window.Coordinate({ x, y })
+  }
+
+  _head () {
+    return this.coordinates[0]
   }
 
   getCoordinates () {
@@ -48,12 +54,6 @@ class Snake {
 
   setDirection (direction) {
     this.direction = direction
-  }
-
-  _setNewHead () {
-    if (this.isMoving()) {
-      this.coordinates.unshift(this._newHead())
-    }
   }
 
   removeTail () {
