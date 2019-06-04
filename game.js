@@ -9,8 +9,6 @@ class Game {
     this.snake = new window.Snake({ box: this.box })
 
     this.playingField = document.getElementById('snake').getContext('2d')
-    this.playingField.strokeStyle = `rgb(224, 229, 219)`
-    this.playingField.fillStyle = `rgb(154, 172, 146)`
   }
 
   start () {
@@ -19,32 +17,15 @@ class Game {
     this._startTimer()
   }
 
-  _startTimer () {
-    this.timer = setInterval(() => this.nextTick(), 130)
-  }
-
   stop () {
     this._stopTimer()
   }
 
-  _stopTimer () {
-    clearInterval(this.timer)
-    this.timer = null
-  }
-
-  nextTick () {
-    if (this.isPaused) {
-      return
-    }
-
-    try {
-      this._ensureNotGameOver()
-      this._moveSnake()
-      this._renderPlayingField()
-    } catch (error) {
-      this.stop()
-      throw error
-    }
+  _createTreat () {
+    this.treat = new window.Coordinate({
+      x: Math.floor(Math.random() * 18 + 1) * this.box,
+      y: Math.floor(Math.random() * 16 + 3) * this.box
+    })
   }
 
   _createDirectionListener () {
@@ -79,50 +60,69 @@ class Game {
     this.isPaused = !this.isPaused
   }
 
-  _createTreat () {
-    this.treat = new window.Coordinate({
-      x: Math.floor(Math.random() * 18 + 1) * this.box,
-      y: Math.floor(Math.random() * 16 + 3) * this.box
-    })
+  _startTimer () {
+    this.timer = setInterval(() => this.nextTick(), 100)
   }
 
-  _renderPlayingField () {
-    this._clearPlayingField()
-    this._renderTreat()
-    this._renderSnake()
+  _stopTimer () {
+    clearInterval(this.timer)
+    this.timer = null
   }
 
-  _clearPlayingField () {
-    this.playingField.clearRect(0, 0, 475, 475)
-  }
+  nextTick () {
+    if (this.isPaused) {
+      return
+    }
 
-  _renderTreat () {
-    this._fillCoordinate(this.treat)
-  }
-
-  _renderSnake () {
-    this.snake.getCoordinates().forEach(coordinate => this._fillCoordinate(coordinate))
-  }
-
-  _fillCoordinate ({ x, y }) {
-    this.playingField.fillRect(x, y, this.box, this.box)
-    // this.playingField.strokeRect(x, y, this.box, this.box)
-  }
-
-  _moveSnake () {
-    this.snake.move()
-
-    if (this.snake.isEating(this.treat)) {
-      this._createTreat()
-      this._renderTreat()
-    } else {
-      this.snake.removeTail()
+    try {
+      this._ensureNotGameOver()
+      this._moveSnake()
+      this._renderPlayingField()
+    } catch (error) {
+      this.stop()
+      throw error
     }
   }
 
   _ensureNotGameOver () {
     this.snake.ensureInsidePlayingField()
     this.snake.ensureNotEatingItself()
+  }
+
+  _moveSnake () {
+    this.snake.move()
+
+    if (this.snake.isEating(this.treat)) {
+      return this._createTreat()
+    }
+
+    this.snake.removeTail()
+  }
+
+  _renderPlayingField () {
+    this._clearPlayingField()
+    this._renderSnake()
+    this._renderTreat()
+  }
+
+  _clearPlayingField () {
+    this.playingField.clearRect(0, 0, 475, 475)
+  }
+
+  _renderSnake () {
+    this.playingField.fillStyle = `#9ae6b4`
+
+    this.snake.getCoordinates().forEach(coordinate => this._fillCoordinate(coordinate))
+  }
+
+  _renderTreat () {
+    this.playingField.fillStyle = `#f0fff4`
+
+    this._fillCoordinate(this.treat)
+  }
+
+  _fillCoordinate ({ x, y }) {
+    this.playingField.fillRect(x, y, this.box, this.box)
   }
 }
 
