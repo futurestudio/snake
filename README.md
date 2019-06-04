@@ -3,3 +3,6 @@ The classic snake game you may know from your Nokia 3310 phone, but in the brows
 
 [![Screenshot of the Snake game in the Browser](https://raw.githubusercontent.com/futurestudio/snake/master/media/snake-in-the-browser.png)](https://snake.futurestud.io)
 
+<p align="center">
+  <i>(click the image to play)</i>
+</p>
