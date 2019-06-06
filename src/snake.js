@@ -48,10 +48,6 @@ class Snake {
     return this.coordinates
   }
 
-  setDirection (direction) {
-    this.direction = direction
-  }
-
   removeTail () {
     if (this.isMoving()) {
       this.coordinates.pop()

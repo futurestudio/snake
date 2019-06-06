@@ -9,7 +9,7 @@ class Game {
 
   start () {
     this._createPauseListener()
-    this._createTreat()
+    this._createInitialTreat()
     this._startTimer()
   }
 
@@ -37,7 +37,7 @@ class Game {
     this.isPaused = !this.isPaused
   }
 
-  _createTreat () {
+  _createInitialTreat () {
     this.playingField._createTreat()
   }
 

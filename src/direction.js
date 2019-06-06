@@ -18,7 +18,8 @@ class Direction {
   }
 
   constructor () {
-    this.direction = null
+    this.currentDirection = null
+
     this._createDirectionListener()
   }
 
@@ -63,11 +64,11 @@ class Direction {
   }
 
   hasDirection () {
-    return !!this.direction
+    return !!this.currentDirection
   }
 
   isLeft () {
-    return this.direction === Direction.LEFT
+    return this.currentDirection === Direction.LEFT
   }
 
   isNotLeft () {
@@ -75,7 +76,7 @@ class Direction {
   }
 
   isRight () {
-    return this.direction === Direction.RIGHT
+    return this.currentDirection === Direction.RIGHT
   }
 
   isNotRight () {
@@ -83,7 +84,7 @@ class Direction {
   }
 
   isUp () {
-    return this.direction === Direction.UP
+    return this.currentDirection === Direction.UP
   }
 
   isNotUp () {
@@ -91,7 +92,7 @@ class Direction {
   }
 
   isDown () {
-    return this.direction === Direction.DOWN
+    return this.currentDirection === Direction.DOWN
   }
 
   isNotDown () {
@@ -99,19 +100,19 @@ class Direction {
   }
 
   setLeft () {
-    this.direction = Direction.LEFT
+    this.currentDirection = Direction.LEFT
   }
 
   setRight () {
-    this.direction = Direction.RIGHT
+    this.currentDirection = Direction.RIGHT
   }
 
   setUp () {
-    this.direction = Direction.UP
+    this.currentDirection = Direction.UP
   }
 
   setDown () {
-    this.direction = Direction.DOWN
+    this.currentDirection = Direction.DOWN
   }
 }
 
