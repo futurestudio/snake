@@ -3,7 +3,7 @@
 class Snake {
   constructor ({ box }) {
     this.box = box
-    this.direction = null
+    this.direction = new window.Direction()
     this.coordinates = this._initialState()
   }
 
@@ -16,39 +16,7 @@ class Snake {
   }
 
   isMoving () {
-    return !!this.direction
-  }
-
-  isMovingLeft () {
-    return this.direction === 'LEFT'
-  }
-
-  isNotMovingLeft () {
-    return !this.isMovingLeft()
-  }
-
-  isMovingRight () {
-    return this.direction === 'RIGHT'
-  }
-
-  isNotMovingRight () {
-    return !this.isMovingRight()
-  }
-
-  isMovingUp () {
-    return this.direction === 'UP'
-  }
-
-  isNotMovingUp () {
-    return !this.isMovingUp()
-  }
-
-  isMovingDown () {
-    return this.direction === 'DOWN'
-  }
-
-  isNotMovingDown () {
-    return !this.isMovingDown()
+    return this.direction.hasDirection()
   }
 
   move () {
@@ -64,10 +32,10 @@ class Snake {
   _newHead () {
     let { x, y } = this._head()
 
-    if (this.direction === 'LEFT') x -= this.box
-    if (this.direction === 'UP') y -= this.box
-    if (this.direction === 'RIGHT') x += this.box
-    if (this.direction === 'DOWN') y += this.box
+    if (this.direction.isLeft()) x -= this.box
+    if (this.direction.isUp()) y -= this.box
+    if (this.direction.isRight()) x += this.box
+    if (this.direction.isDown()) y += this.box
 
     return new window.Coordinate({ x, y })
   }
@@ -78,10 +46,6 @@ class Snake {
 
   getCoordinates () {
     return this.coordinates
-  }
-
-  getDirection () {
-    return this.direction
   }
 
   setDirection (direction) {
