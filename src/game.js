@@ -1,10 +1,25 @@
 'use strict'
 
 class Game {
+  static get SPEED_SLOW() {
+    return 200
+  }
+
+  static get SPEED_MEDIUM() {
+    return 150
+  }
+
+  static get SPEED_FAST() {
+    return 100
+  }
+
   constructor () {
     this.timer = null
     this.isPaused = false
+    this.speed = Game.SPEED_FAST
     this.playingField = new window.PlayingField()
+
+    this._initializeSpeedButtonsListener()
   }
 
   start () {
@@ -15,6 +30,33 @@ class Game {
 
   stop () {
     this._stopTimer()
+  }
+
+  _initializeSpeedButtonsListener() {
+    this._initializeSlowSpeedListener()
+    this._initializeMediumSpeedListener()
+    this._initializeFastSpeedListener()
+  }
+
+  _initializeSlowSpeedListener() {
+    document.getElementById('speed-slow').addEventListener('click', () => {
+      this.speed = Game.SPEED_SLOW
+      this._restartTimer()
+    })
+  }
+
+  _initializeMediumSpeedListener() {
+    document.getElementById('speed-medium').addEventListener('click', () => {
+      this.speed = Game.SPEED_MEDIUM
+      this._restartTimer()
+    })
+  }
+
+  _initializeFastSpeedListener() {
+    document.getElementById('speed-fast').addEventListener('click', () => {
+      this.speed = Game.SPEED_FAST
+      this._restartTimer()
+    })
   }
 
   _createPauseListener () {
@@ -42,12 +84,19 @@ class Game {
   }
 
   _startTimer () {
-    this.timer = setInterval(() => this._nextTick(), 100)
+    console.log(this.speed);
+
+    this.timer = setInterval(() => this._nextTick(), this.speed)
   }
 
   _stopTimer () {
     clearInterval(this.timer)
     this.timer = null
+  }
+
+  _restartTimer() {
+    this._stopTimer()
+    this._startTimer()
   }
 
   _nextTick () {
