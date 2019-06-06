@@ -2,6 +2,7 @@ haters
 
 # editors && IDEs
 .vscode
+.idea
 
 # Logs
 logs
