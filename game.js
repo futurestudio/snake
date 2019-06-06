@@ -2,13 +2,9 @@
 
 class Game {
   constructor () {
-    this.box = 25
-    this.score = 0
-    this.treat = null
     this.timer = null
     this.isPaused = false
-    this.snake = new window.Snake({ box: this.box })
-    this.playingField = document.getElementById('snake').getContext('2d')
+    this.playingField = new window.PlayingField()
   }
 
   start () {
@@ -22,10 +18,7 @@ class Game {
   }
 
   _createTreat () {
-    this.treat = new window.Coordinate({
-      x: Math.floor(Math.random() * 18 + 1) * this.box,
-      y: Math.floor(Math.random() * 16 + 3) * this.box
-    })
+    this.playingField._createTreat()
   }
 
   _createDirectionListener () {
@@ -35,29 +28,49 @@ class Game {
   }
 
   _handleDirection ({ keyCode }) {
-    if (keyCode === 32) {
+    if (this._pressedSpace(keyCode)) {
       return this._togglePaused()
     }
 
-    if (keyCode === 37 && this.snake.getDirection() !== 'RIGHT') {
-      this.snake.setDirection('LEFT')
+    if (this._isKeyLeft(keyCode) && this.playingField.getSnake().isNotMovingRight()) {
+      this.playingField.getSnake().setDirection('LEFT')
     }
 
-    if (keyCode === 38 && this.snake.getDirection() !== 'DOWN') {
-      this.snake.setDirection('UP')
+    if (this._isKeyUp(keyCode) && this.playingField.getSnake().isNotMovingDown()) {
+      this.playingField.getSnake().setDirection('UP')
     }
 
-    if (keyCode === 39 && this.snake.getDirection() !== 'LEFT') {
-      this.snake.setDirection('RIGHT')
+    if (this._isKeyRight(keyCode) && this.playingField.getSnake().isNotMovingLeft()) {
+      this.playingField.getSnake().setDirection('RIGHT')
     }
 
-    if (keyCode === 40 && this.snake.getDirection() !== 'UP') {
-      this.snake.setDirection('DOWN')
+    if (this._isKeyDown(keyCode) && this.playingField.getSnake().isNotMovingUp()) {
+      this.playingField.getSnake().setDirection('DOWN')
     }
   }
 
   _togglePaused () {
     this.isPaused = !this.isPaused
+  }
+
+  _pressedSpace (keyCode) {
+    return keyCode === 32
+  }
+
+  _isKeyLeft (keyCode) {
+    return keyCode === 37
+  }
+
+  _isKeyRight (keyCode) {
+    return keyCode === 39
+  }
+
+  _isKeyUp (keyCode) {
+    return keyCode === 38
+  }
+
+  _isKeyDown (keyCode) {
+    return keyCode === 40
   }
 
   _startTimer () {
@@ -79,6 +92,8 @@ class Game {
       this._moveSnake()
       this._renderPlayingField()
     } catch (error) {
+      console.error(error)
+
       this.stop()
       this._showError(error)
     }
@@ -89,50 +104,16 @@ class Game {
   }
 
   _ensureNotGameOver () {
-    this.snake.ensureInsidePlayingField()
-    this.snake.ensureNotEatingItself()
+    this.playingField.ensureSnakeInsidePlayingField()
+    this.playingField.ensureSnakeNotEatingItself()
   }
 
   _moveSnake () {
-    this.snake.move()
-
-    if (this.snake.isEating(this.treat)) {
-      this.score += 1
-      return this._createTreat()
-    }
-
-    this.snake.removeTail()
+    this.playingField.moveSnake()
   }
 
   _renderPlayingField () {
-    this._renderScore()
-    this._clearPlayingField()
-    this._renderSnake()
-    this._renderTreat()
-  }
-
-  _renderScore () {
-    document.getElementById('score').textContent = this.score
-  }
-
-  _clearPlayingField () {
-    this.playingField.clearRect(0, 0, 475, 475)
-  }
-
-  _renderSnake () {
-    this.playingField.fillStyle = `#9ae6b4`
-
-    this.snake.getCoordinates().forEach(coordinate => this._fillCoordinate(coordinate))
-  }
-
-  _renderTreat () {
-    this.playingField.fillStyle = `#f0fff4`
-
-    this._fillCoordinate(this.treat)
-  }
-
-  _fillCoordinate ({ x, y }) {
-    this.playingField.fillRect(x, y, this.box, this.box)
+    this.playingField.render()
   }
 }
 

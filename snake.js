@@ -19,6 +19,38 @@ class Snake {
     return !!this.direction
   }
 
+  isMovingLeft () {
+    return this.direction === 'LEFT'
+  }
+
+  isNotMovingLeft () {
+    return !this.isMovingLeft()
+  }
+
+  isMovingRight () {
+    return this.direction === 'RIGHT'
+  }
+
+  isNotMovingRight () {
+    return !this.isMovingRight()
+  }
+
+  isMovingUp () {
+    return this.direction === 'UP'
+  }
+
+  isNotMovingUp () {
+    return !this.isMovingUp()
+  }
+
+  isMovingDown () {
+    return this.direction === 'DOWN'
+  }
+
+  isNotMovingDown () {
+    return !this.isMovingDown()
+  }
+
   move () {
     this._setNewHead()
   }
