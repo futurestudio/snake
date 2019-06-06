@@ -1,6 +1,22 @@
 'use strict'
 
 class Direction {
+  static get LEFT () {
+    return 'LEFT'
+  }
+
+  static get RIGHT () {
+    return 'RIGHT'
+  }
+
+  static get UP () {
+    return 'UP'
+  }
+
+  static get DOWN () {
+    return 'DOWN'
+  }
+
   constructor () {
     this.direction = null
     this._createDirectionListener()
@@ -51,7 +67,7 @@ class Direction {
   }
 
   isLeft () {
-    return this.direction === 'LEFT'
+    return this.direction === Direction.LEFT
   }
 
   isNotLeft () {
@@ -59,7 +75,7 @@ class Direction {
   }
 
   isRight () {
-    return this.direction === 'RIGHT'
+    return this.direction === Direction.RIGHT
   }
 
   isNotRight () {
@@ -67,7 +83,7 @@ class Direction {
   }
 
   isUp () {
-    return this.direction === 'UP'
+    return this.direction === Direction.UP
   }
 
   isNotUp () {
@@ -75,7 +91,7 @@ class Direction {
   }
 
   isDown () {
-    return this.direction === 'DOWN'
+    return this.direction === Direction.DOWN
   }
 
   isNotDown () {
@@ -83,19 +99,19 @@ class Direction {
   }
 
   setLeft () {
-    this.direction = 'LEFT'
+    this.direction = Direction.LEFT
   }
 
   setRight () {
-    this.direction = 'RIGHT'
+    this.direction = Direction.RIGHT
   }
 
   setUp () {
-    this.direction = 'UP'
+    this.direction = Direction.UP
   }
 
   setDown () {
-    this.direction = 'DOWN'
+    this.direction = Direction.DOWN
   }
 }
 
