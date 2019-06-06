@@ -84,8 +84,6 @@ class Game {
   }
 
   _startTimer () {
-    console.log(this.speed);
-
     this.timer = setInterval(() => this._nextTick(), this.speed)
   }
 
