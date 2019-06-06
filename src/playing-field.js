@@ -13,7 +13,7 @@ class PlayingField {
     return this.snake
   }
 
-  moveSnake () {
+  _moveSnake () {
     this.snake.move()
 
     if (this.snake.isEating(this.treat)) {
@@ -24,15 +24,9 @@ class PlayingField {
     this.snake.removeTail()
   }
 
-  ensureSnakeInsidePlayingField () {
-    this.snake.ensureInsidePlayingField()
-  }
-
-  ensureSnakeNotEatingItself () {
-    this.snake.ensureNotEatingItself()
-  }
-
   render () {
+    this._moveSnake()
+
     this._clearPlayingField()
     this._renderScore()
     this._renderSnake()
@@ -65,8 +59,8 @@ class PlayingField {
 
   _createTreat () {
     this.treat = new window.Coordinate({
-      x: Math.floor(Math.random() * 18 + 1) * this.box,
-      y: Math.floor(Math.random() * 16 + 3) * this.box
+      x: Math.floor(Math.random() * 18) * this.box,
+      y: Math.floor(Math.random() * 18) * this.box
     })
   }
 }

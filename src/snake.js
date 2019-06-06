@@ -20,7 +20,14 @@ class Snake {
   }
 
   move () {
+    this._switchDirection()
+    this._ensureNotEatingItself()
     this._setNewHead()
+    this._ensureInsidePlayingField()
+  }
+
+  _switchDirection () {
+    this.direction.ensureNewDirection()
   }
 
   _setNewHead () {
@@ -54,7 +61,7 @@ class Snake {
     }
   }
 
-  ensureInsidePlayingField () {
+  _ensureInsidePlayingField () {
     if (this._outOfBounds()) {
       throw new Error('Oh no! Your snake hit the wall')
     }
@@ -65,18 +72,18 @@ class Snake {
   }
 
   _isOutsideX () {
-    const { x } = this._newHead()
+    const { x } = this._head()
 
     return x < 0 || x > this.box * 18
   }
 
   _isOutsideY () {
-    const { y } = this._newHead()
+    const { y } = this._head()
 
     return y < 0 || y > this.box * 18
   }
 
-  ensureNotEatingItself () {
+  _ensureNotEatingItself () {
     if (!this.isMoving()) {
       return
     }

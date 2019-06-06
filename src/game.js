@@ -56,8 +56,6 @@ class Game {
     }
 
     try {
-      this._ensureNotGameOver()
-      this._moveSnake()
       this._renderPlayingField()
     } catch (error) {
       console.error(error)
@@ -69,15 +67,6 @@ class Game {
 
   _showError (error) {
     document.getElementById('error').textContent = error.message
-  }
-
-  _ensureNotGameOver () {
-    this.playingField.ensureSnakeInsidePlayingField()
-    this.playingField.ensureSnakeNotEatingItself()
-  }
-
-  _moveSnake () {
-    this.playingField.moveSnake()
   }
 
   _renderPlayingField () {

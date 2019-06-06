@@ -18,6 +18,7 @@ class Direction {
   }
 
   constructor () {
+    this.newDirection = null
     this.currentDirection = null
 
     this._createDirectionListener()
@@ -30,19 +31,19 @@ class Direction {
   }
 
   _handleDirection ({ keyCode }) {
-    if (this._isKeyLeft(keyCode) && this.isNotRight()) {
+    if (this._isKeyLeft(keyCode)) {
       this.setLeft()
     }
 
-    if (this._isKeyUp(keyCode) && this.isNotDown()) {
+    if (this._isKeyUp(keyCode)) {
       this.setUp()
     }
 
-    if (this._isKeyRight(keyCode) && this.isNotLeft()) {
+    if (this._isKeyRight(keyCode)) {
       this.setRight()
     }
 
-    if (this._isKeyDown(keyCode) && this.isNotUp()) {
+    if (this._isKeyDown(keyCode)) {
       this.setDown()
     }
   }
@@ -65,6 +66,10 @@ class Direction {
 
   hasDirection () {
     return !!this.currentDirection
+  }
+
+  ensureNewDirection () {
+    this.currentDirection = this.newDirection
   }
 
   isLeft () {
@@ -100,19 +105,27 @@ class Direction {
   }
 
   setLeft () {
-    this.currentDirection = Direction.LEFT
+    if (this.isNotRight()) {
+      this.newDirection = Direction.LEFT
+    }
   }
 
   setRight () {
-    this.currentDirection = Direction.RIGHT
+    if (this.isNotLeft()) {
+      this.newDirection = Direction.RIGHT
+    }
   }
 
   setUp () {
-    this.currentDirection = Direction.UP
+    if (this.isNotDown()) {
+      this.newDirection = Direction.UP
+    }
   }
 
   setDown () {
-    this.currentDirection = Direction.DOWN
+    if (this.isNotUp()) {
+      this.newDirection = Direction.DOWN
+    }
   }
 }
 
