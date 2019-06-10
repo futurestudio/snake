@@ -1,15 +1,15 @@
 'use strict'
 
 class Game {
-  static get SPEED_SLOW() {
+  static get SPEED_SLOW () {
     return 200
   }
 
-  static get SPEED_MEDIUM() {
+  static get SPEED_MEDIUM () {
     return 150
   }
 
-  static get SPEED_FAST() {
+  static get SPEED_FAST () {
     return 100
   }
 
@@ -32,27 +32,27 @@ class Game {
     this._stopTimer()
   }
 
-  _initializeSpeedButtonsListener() {
+  _initializeSpeedButtonsListener () {
     this._initializeSlowSpeedListener()
     this._initializeMediumSpeedListener()
     this._initializeFastSpeedListener()
   }
 
-  _initializeSlowSpeedListener() {
+  _initializeSlowSpeedListener () {
     document.getElementById('speed-slow').addEventListener('click', () => {
       this.speed = Game.SPEED_SLOW
       this._restartTimer()
     })
   }
 
-  _initializeMediumSpeedListener() {
+  _initializeMediumSpeedListener () {
     document.getElementById('speed-medium').addEventListener('click', () => {
       this.speed = Game.SPEED_MEDIUM
       this._restartTimer()
     })
   }
 
-  _initializeFastSpeedListener() {
+  _initializeFastSpeedListener () {
     document.getElementById('speed-fast').addEventListener('click', () => {
       this.speed = Game.SPEED_FAST
       this._restartTimer()
@@ -92,7 +92,7 @@ class Game {
     this.timer = null
   }
 
-  _restartTimer() {
+  _restartTimer () {
     this._stopTimer()
     this._startTimer()
   }
